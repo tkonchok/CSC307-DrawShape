@@ -3,22 +3,35 @@ package javiergs.gui.paint.gamma;
 import javax.swing.*;
 
 /**
- * StatusPanel creates a panel with two buttons: Undo and Erase.
+ * StatusPanel creates a panel with two buttons: Undo and Redo.
  * This version includes an ActionListener.
  *
- * @author javiergs
- * @version 2.0
+ * Author: javiergs
+ * Version: 2.0
  */
 public class StatusPanel extends JPanel {
-	
-	public StatusPanel() {
-		JButton button1 = new JButton("Undo");
-		JButton button2 = new JButton("Erase");
-		add(button1);
-		add(button2);
-		ActionNanny actionNanny = new ActionNanny(); // new line compared to version 1.0
-		button1.addActionListener(actionNanny); // new line compared to version 1.0
-		button2.addActionListener(actionNanny); // new line compared to version 1.0
-	}
-	
+
+    private JButton undoButton;
+    private JButton redoButton;
+
+    public StatusPanel() {
+        undoButton = new JButton("Undo");
+        redoButton = new JButton("Redo");
+        add(undoButton);
+        add(redoButton);
+
+        ActionNanny actionNanny = new ActionNanny();
+        undoButton.addActionListener(actionNanny);
+        redoButton.addActionListener(actionNanny);
+    }
+
+    // Method to return the undo button
+    public JButton getUndoButton() {
+        return undoButton;
+    }
+
+    // Method to return the redo button
+    public JButton getRedoButton() {
+        return redoButton;
+    }
 }
