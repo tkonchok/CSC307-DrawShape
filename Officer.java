@@ -74,7 +74,7 @@ public class Officer {
 	public static void setDrawPanel(JPanel panel) {
 		drawPanel = panel;
 	}
-
+	@author Celine Ha
 	public static void performDrawAction() {
 		Action action = new DrawAction(shape, x, y, width, height, color);
 		action.execute();
@@ -82,7 +82,7 @@ public class Officer {
 		redoStack.clear();
 		tellYourBoss();
 	}
-
+	@author Celine Ha
 	public static void undoDrawAction() {
 		System.out.println("Undo button clicked!");
 		if (!undoStack.isEmpty()) {
@@ -95,7 +95,7 @@ public class Officer {
 
 		}
 	}
-
+	@author Celine Ha
 	public static void redoDrawAction() {
 		System.out.println("Redo button clicked!");
 		if (!redoStack.isEmpty()) {
@@ -105,19 +105,19 @@ public class Officer {
 
 		}
 	}
-
+	@author Celine Ha
 	public static void tellYourBoss() {
 		if (drawPanel != null) {
 			System.out.println("repaint");
 			drawPanel.repaint();
 		}
 	}
-
+	@author Celine Ha
 	private interface Action {
 		void execute();
 		void undo();
 	}
-
+	@author Celine Ha 
 	private static class DrawAction implements Action {
 		private String shape;
 		private int x, y, width, height;
