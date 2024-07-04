@@ -8,8 +8,7 @@ import java.util.Stack;
  * Officer is a class that manages the drawing application's state and actions.
  * It handles drawing shapes, setting colors, and managing undo/redo operations.
  *
- * Author: javiergs
- * Author: Celine Ha 
+ * @author:
  * Version: 3.0
  */
 public class Officer {
@@ -20,9 +19,11 @@ public class Officer {
 	private static int y;
 	private static int width;
 	private static int height;
-	private static JPanel drawPanel;
-	private static Stack<Action> undoStack = new Stack<>();
-	private static Stack<Action> redoStack = new Stack<>();
+	public static JPanel drawPanel;
+	public static Stack<DrawAction> undoStack = new Stack<>();
+	private static Stack<DrawAction> redoStack = new Stack<>();
+	public static boolean isDrawingOutline = false;
+	public static int outlineX, outlineY, outlineWidth, outlineHeight;
 
 	public static Color getColor() {
 		return color;
@@ -75,51 +76,63 @@ public class Officer {
 	public static void setDrawPanel(JPanel panel) {
 		drawPanel = panel;
 	}
-	@author Celine Ha
+
+	public static void drawOutline(int x, int y, int width, int height) {
+		Officer.outlineX = x;
+		Officer.outlineY = y;
+		Officer.outlineWidth = width;
+		Officer.outlineHeight = height;
+		Officer.isDrawingOutline = true;
+		tellYourBoss();
+	}
+
+	public static void clearOutline() {
+		Officer.isDrawingOutline = false;
+		tellYourBoss();
+	}
+
 	public static void performDrawAction() {
-		Action action = new DrawAction(shape, x, y, width, height, color);
+		DrawAction action = new DrawAction(shape, x, y, width, height, color);
 		action.execute();
 		undoStack.push(action);
 		redoStack.clear();
+		clearOutline();
 		tellYourBoss();
 	}
-	@author Celine Ha
+
 	public static void undoDrawAction() {
 		System.out.println("Undo button clicked!");
 		if (!undoStack.isEmpty()) {
-			Action action = undoStack.pop();
-			System.out.println("Undoing");
-			action.undo();
-			System.out.println("Undone");
+			DrawAction action = undoStack.pop();
 			redoStack.push(action);
 			System.out.println("tell boss");
-
+			tellYourBoss();
 		}
 	}
-	@author Celine Ha
+
 	public static void redoDrawAction() {
 		System.out.println("Redo button clicked!");
 		if (!redoStack.isEmpty()) {
-			Action action = redoStack.pop();
+			DrawAction action = redoStack.pop();
 			action.execute();
 			undoStack.push(action);
 
 		}
 	}
-	@author Celine Ha
+
 	public static void tellYourBoss() {
 		if (drawPanel != null) {
 			System.out.println("repaint");
 			drawPanel.repaint();
 		}
 	}
-	@author Celine Ha
+
 	private interface Action {
 		void execute();
 		void undo();
 	}
-	@author Celine Ha 
-	private static class DrawAction implements Action {
+
+	public static class DrawAction {
 		private String shape;
 		private int x, y, width, height;
 		private Color color;
@@ -133,7 +146,6 @@ public class Officer {
 			this.color = color;
 		}
 
-		@Override
 		public void execute() {
 			// Perform the drawing action based on shape, coordinates, and color
 			Graphics g = drawPanel.getGraphics();
@@ -147,15 +159,10 @@ public class Officer {
 			}
 		}
 
-		@Override
-		public void undo() {
-			// Undo the drawing action
-			Graphics g = drawPanel.getGraphics();
-			g.setColor(drawPanel.getBackground()); // Assuming background is white or another neutral color
+		public void draw(Graphics g) {
+			g.setColor(color);
 			if (shape.equals("Rectangle")) {
-
 				g.fillRect(x, y, width, height);
-				System.out.println("rectangle fill with background");
 			} else if (shape.equals("Circle")) {
 				g.fillOval(x, y, width, height);
 			} else if (shape.equals("Arc")) {

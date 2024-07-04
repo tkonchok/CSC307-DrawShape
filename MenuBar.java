@@ -24,13 +24,21 @@ public class MenuBar extends JMenuBar {
         JMenu editMenu = new JMenu("Edit");
         JMenuItem undoItem = new JMenuItem("Undo");
         JMenuItem redoItem = new JMenuItem("Redo");
-        JMenuItem eraseItem = new JMenuItem("Erase");
-        undoItem.addActionListener(actionNanny);
-        redoItem.addActionListener(actionNanny);
-        eraseItem.addActionListener(actionNanny);
+
+        // Add ActionListener to the undo button
+        undoItem.addActionListener(e -> {
+            Officer.undoDrawAction(); // Undo the last drawing action
+            // Repaint DrawPanel after undo
+        });
+
+        // Add ActionListener to the redo button
+        redoItem.addActionListener(e -> {
+            Officer.redoDrawAction(); // Redo the last undone action
+            // Repaint DrawPanel after redo
+        });
+
         editMenu.add(undoItem);
         editMenu.add(redoItem);
-        editMenu.add(eraseItem);
 
         JMenu colorMenu = new JMenu("Color");
         String[] colors = {"Black", "Red", "Blue", "Green", "Yellow", "Orange", "Pink"};

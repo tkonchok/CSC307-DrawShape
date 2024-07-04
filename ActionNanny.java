@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * @version 2.0
  */
 public class ActionNanny implements ActionListener {
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() instanceof JMenuItem) {

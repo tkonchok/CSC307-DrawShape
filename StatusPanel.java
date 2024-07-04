@@ -24,12 +24,12 @@ public class StatusPanel extends JPanel {
         undoButton.addActionListener(actionNanny);
         redoButton.addActionListener(actionNanny);
     }
-    @author Celine Ha 
+
     // Method to return the undo button
     public JButton getUndoButton() {
         return undoButton;
     }
-    @author Celine Ha 
+
     // Method to return the redo button
     public JButton getRedoButton() {
         return redoButton;
