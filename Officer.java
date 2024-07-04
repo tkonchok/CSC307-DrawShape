@@ -9,6 +9,7 @@ import java.util.Stack;
  * It handles drawing shapes, setting colors, and managing undo/redo operations.
  *
  * Author: javiergs
+ * Author: Celine Ha 
  * Version: 3.0
  */
 public class Officer {
