@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
  * Sends information to Officer for handling drawing actions.
  *
  * @author javiergs
+ * @author Celine Ha 
  * @version 1.0
  */
 public class MouseNanny implements MouseListener {
